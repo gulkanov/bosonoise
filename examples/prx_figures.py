@@ -40,6 +40,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.lines import Line2D
+from scipy.interpolate import CubicSpline
 
 from bosonoise.plotting import BLUE_ORDINAL, SERIES, TEXT_PRIMARY, TEXT_SECONDARY, ordinal_cmap, use_style
 
@@ -595,7 +596,9 @@ def f9_bayes():
             sv = smooth[k][vname]
             s_ = np.array(sv["s"])
             sf = np.linspace(0, s_[-1], 601)
-            lf = np.interp(sf, s_, sv["log_marginal_per_s"])
+            # the log-marginal is known on the grid of s (step 1 near the peak); a cubic spline draws it smoothly. Display
+            # only: the quantiles and Bayes factors in the text use log-linear interpolation, which differs by <= 0.04.
+            lf = CubicSpline(s_, sv["log_marginal_per_s"])(sf)
             p = np.exp(lf - lf.max())
             ax.plot(sf, p / (p.sum() * (sf[1] - sf[0])), ls, color=SERIES[j], lw=1.1)
     ax.axvline(1.0, color=TEXT_SECONDARY, lw=0.8, ls="-.")
