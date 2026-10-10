@@ -5,8 +5,8 @@ models**.
 
 This repository holds the code and the data products of the paper
 
-> **χ-matching leaves a first-order unheralded fault in bosonic-code ancillas** (2026). The arXiv identifier will be
-> added here.
+> **Photon-stimulated decay of χ-matched ancillas causes unheralded bit flips in bosonic codes** (2026). The arXiv
+> identifier will be added here.
 
 Every figure and table of the paper is reproduced by one command (see [Reproducing the paper](#reproducing-the-paper)).
 Version 0.1.0; see `CHANGELOG.md`.
