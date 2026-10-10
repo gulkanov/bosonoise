@@ -1,0 +1,4 @@
+# syndrome datasets must stay byte-identical (Stim b8 and circuits): no line-ending conversion
+*.b8 binary
+*.npy binary
+data/syndromes/** -text

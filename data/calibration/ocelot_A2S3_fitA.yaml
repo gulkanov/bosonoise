@@ -1,0 +1,430 @@
+label: A (reproduce Fig. 7)
+date: '2026-09-29'
+units: GHz (f = omega/2pi); d_c dimensionless
+params:
+  f_s: 5.313847800142108
+  EJ_q: 18.867690862378154
+  EC_q: 0.19827488334330512
+  EJmax_c: 62.113726357991766
+  EC_c: 0.1673727555225529
+  d_c: 0.5463351888329447
+  g_sc: 0.05438309775074017
+  g_sq: 0.010614354765522813
+  g_cq: 0.163241524641534
+  ng_q: 0.0
+  ng_c: 0.0
+  K_s_extra: 1.851010627129389e-06
+stderr_statistical:
+  f_s: 6.0473561782436077e-05
+  EJ_q: 0.006451346930054262
+  EC_q: 9.203001132368826e-05
+  EJmax_c: 6.440482174207429e-06
+  EC_c: 0.0003616642072006101
+  d_c: 0.0007986489255220743
+  g_sc: 0.0002923586183231994
+  g_sq: 8.781146920788671e-05
+  g_cq: 0.0006388475672102022
+  K_s_extra: 7.894672546757425e-09
+g01_couplings_GHz:
+  0.0:
+    g_sc01: 0.0994125048232968
+    g_sq01: 0.013671822741248098
+    g_cq01: 0.38436208161476587
+  0.5:
+    g_sc01: 0.08517061569553486
+    g_sq01: 0.013671822741248098
+    g_cq01: 0.32929816223155295
+cost: 1.1647263124547005
+success: true
+message: '`ftol` termination condition is satisfied.'
+fit_truncation:
+  n_s: 8
+  n_c: 6
+  n_q: 8
+  ncut: 20
+  e_cut: null
+  ref_flux: 0.5
+check_truncation:
+  n_s: 12
+  n_c: 9
+  n_q: 11
+  ncut: 30
+  e_cut: null
+  ref_flux: 0.5
+truncation_max_abs_change_GHz:
+  f_s: 7.565947868215517e-11
+  f_ge: 3.3957343603674417e-09
+  f_ef: 5.507096201284867e-08
+  f_c: 1.2996000720022494e-08
+  chi_ge: 1.8872867713071173e-09
+  chi_gf: 1.7725592549311386e-08
+  K_g: 1.730171561575844e-11
+  K_e: 1.0877565514988419e-09
+  K_f: 8.97550123113433e-09
+targets:
+- quantity: f_s
+  flux: 0.25
+  value: 5.309934999999999
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_s_GHz
+  model: 5.309933187462203
+  pull: -0.0036250755925948397
+- quantity: f_ge
+  flux: 0.25
+  value: 5.20742
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ge_GHz
+  model: 5.2074293966155345
+  pull: 0.018793231069125227
+- quantity: f_ef
+  flux: 0.25
+  value: 5.00054
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ef_GHz
+  model: 5.000499595557047
+  pull: -0.08080888590633606
+- quantity: chi_ge
+  flux: 0.25
+  value: -3.374020000000001e-05
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_ge_MHz
+  model: -3.444566021393314e-05
+  pull: -0.14109204278662504
+- quantity: chi_gf
+  flux: 0.25
+  value: -2.981460000000001e-05
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_gf_MHz
+  model: -3.029068515481015e-05
+  pull: -0.09521703096202751
+- quantity: K_g
+  flux: 0.25
+  value: 1.7561999999999998e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_g_kHz
+  model: 1.7566089258735929e-06
+  pull: 0.004089258735930482
+- quantity: K_e
+  flux: 0.25
+  value: 1.735595e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_e_kHz
+  model: 1.7361417938843715e-06
+  pull: 0.005467938843714848
+- quantity: K_f
+  flux: 0.25
+  value: 1.73411e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_f_kHz
+  model: 1.7347266219047697e-06
+  pull: 0.0061662190476977005
+- quantity: f_s
+  flux: 0.3
+  value: 5.3096560021474595
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_s_GHz
+  model: 5.309656652082752
+  pull: 0.0012998705845035374
+- quantity: f_ge
+  flux: 0.3
+  value: 5.203000064423765
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ge_GHz
+  model: 5.203018869564368
+  pull: 0.03761028120585763
+- quantity: f_ef
+  flux: 0.3
+  value: 4.9980020365068
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ef_GHz
+  model: 4.997992319804177
+  pull: -0.019433405245905533
+- quantity: chi_ge
+  flux: 0.3
+  value: -0.00010232956370794559
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_ge_MHz
+  model: -0.00010307912190299362
+  pull: -0.1499116390096068
+- quantity: chi_gf
+  flux: 0.3
+  value: -8.879579047959913e-05
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_gf_MHz
+  model: -8.912629753243806e-05
+  pull: -0.06610141056778608
+- quantity: K_g
+  flux: 0.3
+  value: 1.6655519434502506e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_g_kHz
+  model: 1.66567779480431e-06
+  pull: 0.0012585135405942729
+- quantity: K_e
+  flux: 0.3
+  value: 1.6755126592698638e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_e_kHz
+  model: 1.6767511157311787e-06
+  pull: 0.012384564613149358
+- quantity: K_f
+  flux: 0.3
+  value: 1.634755801717967e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_f_kHz
+  model: 1.6358114027781312e-06
+  pull: 0.010556010601641828
+- quantity: f_s
+  flux: 0.35
+  value: 5.309291012884753
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_s_GHz
+  model: 5.309297679812205
+  pull: 0.013333854903763154
+- quantity: f_ge
+  flux: 0.35
+  value: 5.196727176091625
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ge_GHz
+  model: 5.196749101416353
+  pull: 0.04385064945644501
+- quantity: f_ef
+  flux: 0.35
+  value: 4.994617090193271
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ef_GHz
+  model: 4.994642999028585
+  pull: 0.05181767062722997
+- quantity: chi_ge
+  flux: 0.35
+  value: -0.00025523456800286313
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_ge_MHz
+  model: -0.00025562136513190836
+  pull: -0.07735942580904637
+- quantity: chi_gf
+  flux: 0.35
+  value: -0.00022427487222619887
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_gf_MHz
+  model: -0.00022389541127676438
+  pull: 0.07589218988689932
+- quantity: K_g
+  flux: 0.35
+  value: 1.3294415640658557e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_g_kHz
+  model: 1.330127126664138e-06
+  pull: 0.0068556259828222365
+- quantity: K_e
+  flux: 0.35
+  value: 1.6763642984967787e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_e_kHz
+  model: 1.6783559857458386e-06
+  pull: 0.019916872490598325
+- quantity: K_f
+  flux: 0.35
+  value: 1.392899946313529e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_f_kHz
+  model: 1.3951103152720634e-06
+  pull: 0.02210368958534329
+- quantity: f_s
+  flux: 0.4
+  value: 5.308866012884753
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_s_GHz
+  model: 5.308879584330107
+  pull: 0.027142890708375944
+- quantity: f_ge
+  flux: 0.4
+  value: 5.188570322118826
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ge_GHz
+  model: 5.188559981740118
+  pull: -0.020680757415902917
+- quantity: f_ef
+  flux: 0.4
+  value: 4.99055414817466
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ef_GHz
+  model: 4.990595205853843
+  pull: 0.0821153583672185
+- quantity: chi_ge
+  flux: 0.4
+  value: -0.0005371134341445957
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_ge_MHz
+  model: -0.000537120499672028
+  pull: -0.0014131054864663717
+- quantity: chi_gf
+  flux: 0.4
+  value: -0.00048608879527559074
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_gf_MHz
+  model: -0.00048465810388975683
+  pull: 0.28613827716678214
+- quantity: K_g
+  flux: 0.4
+  value: 2.1818466356478078e-07
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_g_kHz
+  model: 2.2144575240190534e-07
+  pull: 0.032610888371245615
+- quantity: K_e
+  flux: 0.4
+  value: 2.0483536828919114e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_e_kHz
+  model: 2.0494923731462222e-06
+  pull: 0.011386902543108774
+- quantity: K_f
+  flux: 0.4
+  value: 8.023066156048672e-07
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_f_kHz
+  model: 8.053162492416277e-07
+  pull: 0.030096336367605295
+- quantity: f_s
+  flux: 0.45
+  value: 5.308488016469746
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_s_GHz
+  model: 5.30850198924694
+  pull: 0.02794555438789814
+- quantity: f_ge
+  flux: 0.45
+  value: 5.180291321160043
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ge_GHz
+  model: 5.180215671489697
+  pull: -0.1512993406915797
+- quantity: f_ef
+  flux: 0.45
+  value: 4.986763139992839
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ef_GHz
+  model: 4.986785640951118
+  pull: 0.045001916557652066
+- quantity: chi_ge
+  flux: 0.45
+  value: -0.0009031850551378448
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_ge_MHz
+  model: -0.0009039320594004252
+  pull: -0.14940085251607166
+- quantity: chi_gf
+  flux: 0.45
+  value: -0.0008464921220909419
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_gf_MHz
+  model: -0.0008449908182548427
+  pull: 0.30026076721983636
+- quantity: K_g
+  flux: 0.45
+  value: -2.0983388506981754e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_g_kHz
+  model: -2.0964698475012256e-06
+  pull: 0.018690031969498106
+- quantity: K_e
+  flux: 0.45
+  value: 3.1016820193340494e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_e_kHz
+  model: 3.1017268886657234e-06
+  pull: 0.00044869331673987517
+- quantity: K_f
+  flux: 0.45
+  value: -3.1984409022556455e-07
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_f_kHz
+  model: -3.230327347836237e-07
+  pull: -0.03188644558059156
+- quantity: f_s
+  flux: 0.5
+  value: 5.30832
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_s_GHz
+  model: 5.3083417739604215
+  pull: 0.04354792084271253
+- quantity: f_ge
+  flux: 0.5
+  value: 5.176490010741139
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ge_GHz
+  model: 5.1763690591687865
+  pull: -0.24190314470473595
+- quantity: f_ef
+  flux: 0.5
+  value: 4.985110010741138
+  sigma: 0.0005
+  source: Ocelot Fig.7 (AWS model, A2-S3) omega_a_ef_GHz
+  model: 4.985118602266493
+  pull: 0.01718305070852466
+- quantity: chi_ge
+  flux: 0.5
+  value: -0.0010949292696025778
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_ge_MHz
+  model: -0.0010965949827106414
+  pull: -0.33314262161271424
+- quantity: chi_gf
+  flux: 0.5
+  value: -0.001043919248120301
+  sigma: 5.0e-06
+  source: Ocelot Fig.7 (AWS model, A2-S3) chi_gf_MHz
+  model: -0.0010430271288743853
+  pull: 0.17842384918312185
+- quantity: K_g
+  flux: 0.5
+  value: -3.6731035767991403e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_g_kHz
+  model: -3.6764348614326536e-06
+  pull: -0.03331284633513322
+- quantity: K_e
+  flux: 0.5
+  value: 3.860636874328679e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_e_kHz
+  model: 3.861140298155874e-06
+  pull: 0.005034238271950787
+- quantity: K_f
+  flux: 0.5
+  value: -1.1034967132116004e-06
+  sigma: 1.0e-07
+  source: Ocelot Fig.7 (AWS model, A2-S3) K_s_f_kHz
+  model: -1.1157435846342878e-06
+  pull: -0.12246871422687387
+- quantity: f_c
+  flux: 0.0
+  value: 9.0
+  sigma: 0.05
+  source: 'Ocelot App. D3 p.19: coupler 9.0 GHz at Phi=0 (A2-S3 model)'
+  model: 8.98063706684497
+  pull: -0.38725866310059587
+- quantity: f_c
+  flux: 0.5
+  value: 6.6
+  sigma: 0.05
+  source: 'Ocelot App. D3 p.19: coupler 6.6 GHz at Phi0/2 (A2-S3 model)'
+  model: 6.643507930776047
+  pull: 0.8701586155209462
+- quantity: f_s
+  flux: 0.0
+  value: 5.31
+  sigma: 0.005
+  source: 'Ocelot Fig. 9b p.22: S3 frequency, couplers idle (measured)'
+  model: 5.310440027329742
+  pull: 0.0880054659484486
+- quantity: f_ge
+  flux: 0.0
+  value: 5.21
+  sigma: 0.005
+  source: 'Ocelot Fig. 9b p.22: A2 frequency, couplers idle (measured)'
+  model: 5.214693497718513
+  pull: 0.9386995437026258
+note: Static-spectroscopy calibration only (no error-rate data; paper App. A.2). K_s_extra
+  is a spectator (buffer/ATS) storage Kerr absent from the 3-mode reduction.

@@ -1,0 +1,40 @@
+# =====================================================================================
+# AWS companion device (single cat-qubit unit cell of the Ocelot design family) -- parameters
+#   H. Putterman et al., "Preserving phase coherence and linearity in cat qubits with exponential
+#   bit-flip suppression", Phys. Rev. X 15, 011070 (2025); arXiv:2409.17556 (v2).
+# Extracted 2026-09-30 from the arXiv v2 PDF (literature/2409.17556.pdf; printed page = PDF page).
+# A DIFFERENT DEVICE from Ocelot. Used only for the pulsed-stabilization check (paper App. J).
+# Conventions and 'kind'/'use' labels as in ocelot.yaml. Bit-flip times in the paper are 2 T_Z
+# (App. F, Eq. F7: the inverse Pauli rate), the same convention as Ocelot's physical flip times.
+# =====================================================================================
+
+meta:
+  paper: "Putterman et al., PRX 15, 011070 (2025), arXiv:2409.17556v2"
+  extracted_on: "2026-09-30"
+
+buffer:
+  kappa_b_MHz: {value: 10.7, kind: measured, use: calibration, source: "Table I p.11; App. H"}
+  g2_kHz: {value: 578, err: 4, kind: measured, use: calibration,
+           source: "App. H, Fig. 13: fit of the pure two-photon dissipation dynamics of a displaced state (|alpha|^2 = 8 -> vacuum population); a static dissipation characterization, not bit-flip data"}
+  kappa2_kHz: {value: 124, err: 2, kind: derived, use: calibration, source: "kappa2 = 4 g2^2 / kappa_b (App. H)"}
+  detuning_MHz: {value: 0.0, band: [-1.0, 1.0], kind: aws_design, use: calibration,
+                 source: "App. D p.13: the buffer drive is set to the Stark-shifted buffer frequency to ~1 MHz precision (performance comparable within ~1 MHz); Table I 'buffer freq. - drive freq.' = 29.3 MHz is the pump-induced Stark shift"}
+  chi_sb_kHz: {value: 156, kind: aws_model, use: calibration,
+               source: "App. G4 p.23: circuit model tuned to the measured buffer spectrum (not a direct measurement); used by AWS in their simulations"}
+
+storage:
+  K_s_kHz: {value: 0.97, err: 0.02, kind: measured, use: calibration, source: "App. M, Fig. 20: storage Ramsey vs displacement (model prediction 1.1 kHz, App. G4)"}
+  stark_shift_under_3WM_MHz: {value: 0.39, kind: measured, use: context, source: "Table I; tracked in the pulsed experiments (Sec. VII)"}
+  T1_us: {value: 76, err: 1, kind: measured, use: calibration, source: "Fig. 4d p.5, without two-photon dissipation"}
+  T2_us: {value: 139, err: 2, kind: measured, use: calibration, source: "Fig. 4e p.5, without two-photon dissipation"}
+  T1_under_2ph_diss_us: {value: 79, err: 1, kind: measured, use: calibration, source: "Fig. 4d p.5, with pure two-photon dissipation; App. G4 uses 79"}
+  T2_under_2ph_diss_us: {value: 116, err: 2, kind: measured, use: calibration, source: "Fig. 4e p.5, with pure two-photon dissipation; App. G4 uses 116"}
+  T1_at_phase_flip_run_us: {value: 74, err: 1, kind: measured, use: context, source: "App. K: T1 with dissipation at the time of the phase-flip measurement (drifts over a week, Fig. 17a)"}
+  T1_eff_us: {value: 70, err: 1, kind: measured, use: validation, source: "Sec. VI, Fig. 6b: phase-flip rate / |alpha|^2"}
+
+pulsed_stabilization:
+  T_cycle_us: {value: 3.0, kind: measured, use: context, source: "Sec. VII, Fig. 7"}
+  T_on_us: {value: [3.0, 1.0, 0.2], kind: measured, use: context, source: "Fig. 7b: static, T_off/T_cycle = 0.67, 0.93"}
+  phase_tracking: "the storage phase is tracked so that the dissipation is aligned with the coherent states when it turns back on (Sec. VII)"
+  data: "data/digitized/companion_fig7b.csv (tools/extract_companion_fig7b.py) -- VALIDATION ONLY"
+  aws_fitted_note: "AWS's own simulations of Fig. 7b use the white-noise dephasing reduced by 2 to match their static data (App. G4) -- aws_fitted, never used by us"

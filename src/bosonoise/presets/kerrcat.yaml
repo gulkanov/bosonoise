@@ -1,0 +1,74 @@
+# =====================================================================================
+# Kerr-cat repetition code (Hamiltonian stabilization, bias-preserving CX) -- a LITERATURE operation
+# model, used by dem/models.py: kerrcat_model.
+#   [DA21] A. S. Darmawan et al., "Practical quantum error correction with the XZZX code and Kerr-cat qubits",
+#          PRX Quantum 2, 030345 (2021); arXiv:2104.09539v2
+#   [PU20] S. Puri et al., "Bias-preserving gates with stabilized cat qubits", Sci. Adv. 6, eaay5901 (2020);
+#          arXiv:1905.00450
+#   [FR24] N. E. Frattini et al., PRX 14, 031040 (2024); arXiv:2209.03934
+# Extracted 2026-09-30 from the arXiv versions cited above (DA21 Tables I-II from arXiv:2104.09539v2).
+#
+# Noise of every DA21 operation: kappa (1 + n_th) D[a] + kappa n_th D[a^dag], n_th = 8%, plus kappa2 D[a^2] with
+# kappa2 = K/10 after each CX ("autonomous leakage correction"). Times in units of 1/K. DA21 publish, per operation,
+# the infidelity and (for the CX) the average bias = (IZ + ZI + ZZ)/(sum of the other 12 Paulis) -- not the
+# individual Pauli probabilities and not the idle rates.
+# kind/use labels as in allcat.yaml.
+# =====================================================================================
+
+meta:
+  model: "dem/models.py: kerrcat_model"
+  extracted_on: "2026-09-30"
+
+noise:
+  n_th: {value: 0.08, kind: literature, use: model, source: "DA21 p. 9"}
+  kappa2_over_K: {value: 0.1, kind: literature, use: model, source: "DA21 p. 9 (two-photon dissipation after every CX)"}
+
+operations:  # DA21 Table I (|a|^2 = 1, p. 10) and Table II (|a|^2 = 6.25, p. 11); bias-preserving CX
+  nbar_1:
+    nbar: 1.0
+    source: "DA21 Table I, p. 10"
+    kappa_over_K: [0.67e-4, 0.83e-4, 1.11e-4, 1.45e-4, 1.67e-4]
+    cx_infidelity: [0.020, 0.024, 0.031, 0.041, 0.046]
+    cx_bias: [16.3, 17.2, 16.4, 16.5, 16.8]
+    prep_infidelity: [0.0015, 0.0019, 0.0027, 0.0032, 0.004]
+    meas_infidelity: [0.017, 0.017, 0.018, 0.019, 0.020]
+    T_cx: 112.6   # 1/K, two-step CX (T_CX = 2T)
+    T_p: 16.5     # preparation, epsilon = 0.026 K
+    T_cd: 42.0    # controlled displacement to the readout mode; measurement T_M = T_P + T_CD
+  nbar_6.25:
+    nbar: 6.25
+    source: "DA21 Table II, p. 11"
+    kappa_over_K: [1.67e-4, 2.08e-4, 2.77e-4, 4.16e-4]
+    cx_infidelity: [0.047, 0.054, 0.071, 0.104]
+    cx_bias: [319.0, 337.0, 357.0, 375.0]
+    prep_infidelity: [0.003, 0.004, 0.005, 0.007]
+    meas_infidelity: [0.008, 0.009, 0.011, 0.012]
+    T_cx: 18.47
+    T_p: 2.6      # epsilon ~ 0.15 K
+    T_cd: 2.5     # kappa_r = 1.0 K, g ~ 0.5 K; T_M = T_P + T_CD = 5.1
+
+cx:
+  time_law: {value: 115.0, kind: derived, use: model,
+             source: "T_CX = 115/(|a|^2 K): DA21 give 112.6/K at |a|^2 = 1 and 18.47/K at 6.25 (gap-limited speed)"}
+  Z_split: {value: [0.5, 0.25, 0.25], kind: literature, use: model,
+            source: "Z_aI : IZ_d : Z_aZ_d = 1 : 1/2 : 1/2 of the Z part (DA21 generic bias-preserving CX, pp. 8-9)"}
+  bitflip_paulis: {value: [XI, IX, YI, YX, XX, ZX, IY, XY, XZ, YY, YZ, ZY], kind: literature, use: model,
+                   source: "the 12 non-Z two-qubit Paulis (DA21 average-bias definition)"}
+  bitflip_split: {value: equal, kind: assumption, use: model, source: "no published split"}
+  beyond_table_nbar: {value: heating_limited, kind: assumption, use: model,
+                      source: "beyond |a|^2 = 6.25 the non-Z part is scaled by 6.25/|a|^2 (kappa n_th T_CX, T_CX ~ 1/|a|^2); our estimate kappa n_th T_CX/2 = 1.2e-4 is 84% of the DA21 value 1.5e-4 at the design point"}
+
+readout:
+  well_infidelity: {value: 0.0046, kind: literature, use: model,
+                    source: "FR24: single-shot readout infidelity 0.46% (the well / Z readout)"}
+
+design_point:
+  nbar: {value: 6.25, source: "DA21 Table II"}
+  kappa_over_K: {value: 1.67e-4, source: "DA21 Table II, first column"}
+  K_MHz: {value: 10.0, source: "DA21 pp. 2, 11-12 (K/2pi = 10 MHz)"}
+
+validation:  # used only to test the model (examples/literature_checks_models.py)
+  rep9_three_rounds: {value: 0.0162, err: 0.0002, nbar: 6.25, kappa_over_K: 2.08e-4, kind: literature, use: validation,
+                      source: "DA21 p. 14, Fig. 9b: n = 9 repetition code, 3 rounds, exact simulation with optimal decoding, leakage neglected"}
+  leakage_per_round: {value: [1.0e-4, 1.0e-3], kind: literature, use: validation,
+                      source: "DA21 p. 10: leakage per qubit per stabilizer round between 1e-3 and 1e-4"}

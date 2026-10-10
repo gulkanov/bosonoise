@@ -1,0 +1,19 @@
+# Vector-extracted from Fig. 12 of Putterman et al., arXiv:2409.13025v2, p.24: CX gate lengths (us).
+# Caption: purple = g/e, red = g/f; the chi ordering and the A1-S1 CX^2 length (504 ns) indicate the opposite.
+pair,color,L_CX_us
+A1-S1,purple,0.2915
+A1-S1,red,0.2795
+A1-S2,purple,0.3435
+A1-S2,red,0.3275
+A2-S2,purple,0.3918
+A2-S2,red,0.3758
+A2-S3,purple,0.4798
+A2-S3,red,0.4718
+A3-S3,purple,0.5522
+A3-S3,red,0.5602
+A3-S4,purple,0.3442
+A3-S4,red,0.3922
+A4-S4,purple,0.4246
+A4-S4,red,0.3526
+A4-S5,purple,0.3366
+A4-S5,red,0.3446

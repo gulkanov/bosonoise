@@ -1,0 +1,56 @@
+{
+ "baseline": {
+  "calib": "6.569",
+  "logZ": 235.0606509889772,
+  "logL_max": 247.2328284010102,
+  "coupling_median_MHz": 5.784005641391857,
+  "T1_median_us": 3.5492814289583143,
+  "sd_median_MHz": 2.320454823630691,
+  "n_star_median": 10.596287021117146
+ },
+ "wide T1_TLS and sigma_sd priors (to 30 us, 10 MHz)": {
+  "calib": "6.569",
+  "logZ": 235.4038769076518,
+  "logL_max": 247.34657116947162,
+  "coupling_median_MHz": 5.498989401923496,
+  "T1_median_us": 3.2008642427730507,
+  "sd_median_MHz": 2.464678369746193,
+  "n_star_median": 10.609657051596368
+ },
+ "no spectral diffusion": {
+  "calib": "6.569",
+  "logZ": 233.05346329529914,
+  "logL_max": 245.5331763625767,
+  "coupling_median_MHz": 6.12752320235329,
+  "T1_median_us": 7.104132602455104,
+  "sd_median_MHz": 0.0,
+  "n_star_median": 11.362632076241791
+ },
+ "binomial noise (weights 1/[P(1-P)], smoothed data)": {
+  "calib": "6.569",
+  "logZ": 90.45991943517376,
+  "logL_max": 102.3894256019271,
+  "coupling_median_MHz": 5.849118470954387,
+  "T1_median_us": 2.709658999918914,
+  "sd_median_MHz": 2.3430837499879775,
+  "n_star_median": 10.693165671282935
+ },
+ "coupler prior f_c,min 6.25 GHz": {
+  "calib": "6.25",
+  "logZ": 234.34607470201823,
+  "logL_max": 246.46454928745592,
+  "coupling_median_MHz": 4.921852382807644,
+  "T1_median_us": 3.215819932774272,
+  "sd_median_MHz": 2.3430021351800736,
+  "n_star_median": 10.603016488980304
+ },
+ "coupler prior f_c,min 6.75 GHz": {
+  "calib": "6.75",
+  "logZ": 235.45617180000067,
+  "logL_max": 247.5040496604033,
+  "coupling_median_MHz": 6.256784260585814,
+  "T1_median_us": 3.8759571290404256,
+  "sd_median_MHz": 2.222392829460443,
+  "n_star_median": 10.594699414354858
+ }
+}

@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bosonoise"
+version = "0.1.0"
+description = "First-principles noise channels of bosonic-qubit cells: circuit -> spectra -> dynamics -> channels -> DEM"
+readme = "README.md"
+authors = [{ name = "Aleksandr Gulkanov" }]
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pyyaml>=6",
+    "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+qec = ["stim>=1.16", "pymatching>=2.4", "sinter>=1.13"]  # tested with stim 1.16, PyMatching 2.4 (correlated matching)
+ref = ["scqubits>=4.0", "qutip>=5.0"]
+dev = ["pytest>=8", "scqubits>=4.0", "qutip>=5.0"]
+data = ["pyarrow>=15"]  # public Ocelot dataset (Parquet): examples/zenodo_*_ocelot.py, phase_logical_model_ocelot.py
+tools = ["pdfminer.six>=20231228"]  # re-extraction of the digitized figures (tools/extract_*.py); needs the arXiv PDFs
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+bosonoise = ["presets/*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

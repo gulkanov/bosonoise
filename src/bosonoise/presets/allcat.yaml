@@ -1,0 +1,64 @@
+# =====================================================================================
+# All-cat repetition code: dissipative (two-photon-stabilized) cats as data AND ancillas,
+# in the style of Alice & Bob -- a LITERATURE operation model, used by dem/models.py: allcat_model.
+#   [LR23] F.-M. Le Regent et al., "High-performance repetition cat code using fast noisy operations",
+#          Quantum 7, 1198 (2023); arXiv:2212.11927v5
+#   [GO23] E. Gouzien et al., PRL 131, 040602 (2023); arXiv:2302.06639v2
+#   [CH22] C. Chamberland et al., PRX Quantum 3, 010329 (2022); arXiv:2012.04108v2
+# Extracted 2026-09-30 from the arXiv versions cited above; every entry names its page, equation or table.
+#
+# Convention: every operation lasts T = 1/kappa2; one round is prep | CNOT | refresh | CNOT | M_X (5 T);
+# eta = kappa1/kappa2; |a|^2 = nbar. Thermal population: kappa1 -> kappa1 (1 + 2 n_th) (CH22 App. D).
+# kind: literature (a number of a published model), assumption (ours, named as such), derived (ours, formula given)
+# use:  model (enters the noise model), validation (published result used only to test the model)
+# =====================================================================================
+
+meta:
+  model: "dem/models.py: allcat_model"
+  extracted_on: "2026-09-30"
+
+cnot:  # control = ancilla, target = data cat
+  Z_ancilla_nonadiabatic: {value: 0.159, kind: literature, use: model,
+                           source: "LR23 Eq. (3) at T = 1/kappa2: Z_a = |a|^2 kappa1 T + 0.159/(|a|^2 kappa2 T)"}
+  Z_data_fraction: {value: 0.5, kind: literature, use: model,
+                    source: "LR23 Eq. (4): Z_d = Z_aZ_d = |a|^2 kappa1 T / 2"}
+  bitflip_prefactor: {value: 0.5, kind: literature, use: model,
+                      source: "LR23 p. 8 and GO23 Eq. (D8): p_X^CNOT = 0.5 exp(-2|a|^2), summed over the bit-flip Paulis"}
+  bitflip_exponent: {value: 2.0, kind: literature, use: model, source: "same"}
+  bitflip_paulis: {value: [XI, IX, YI, YX, XX, ZX, IY, XY, XZ, YY, YZ, ZY], kind: literature, use: model,
+                   source: "LR23 p. 8: the 12 error mechanisms leading to a bit flip (control first)"}
+  bitflip_split: {value: equal, kind: assumption, use: model,
+                  source: "no published split of p_X^CNOT among the 12 Paulis at T = 1/kappa2"}
+
+idle:  # per step of duration T
+  Z_per_step: {value: 1.0, kind: literature, use: model,
+               source: "Z = |a|^2 kappa1 T (LR23 pp. 7-8; CH22 Eq. (D4)); the coefficient of |a|^2 eta"}
+  XY_prefactor: {value: 0.5, kind: literature, use: model,
+                 source: "CH22 Table II: X = Y = 0.5 kappa1 |a|^2 T exp(-4|a|^2) (negligible)"}
+  XY_exponent: {value: 4.0, kind: literature, use: model, source: "same"}
+  data_idle_steps: {value: 3, kind: literature, use: model,
+                    source: "a data cat idles during prep, refresh and measurement of the ancillas (LR23 Fig. 4 inset); the two boundary cats also during the other CNOT layer (4 steps)"}
+  f_mid: {value: 0.3333333333333333, kind: derived, use: model,
+          source: "the refresh step (1 of the 3 idle steps) lies between a data cat's two CNOTs"}
+
+ancilla:
+  prep_steps: {value: 1, kind: literature, use: model, source: "preparation of |+> (LR23 pp. 7-8; GO23 Table I: |a|^2 kappa1 T_prep)"}
+  meas_steps: {value: 2, kind: literature, use: model,
+               source: "refresh + M_X, each |a|^2 kappa1 T (LR23 pp. 7-8; GO23 Table I); with prep and the two CNOTs the syndrome error is 0.318/|a|^2 + 6 |a|^2 eta (LR23 p. 8)"}
+
+readout:
+  parity_steps: {value: 1, kind: literature, use: model, source: "M_X of the data cats as for the ancillas (LR23 pp. 7-8)"}
+  well_a: {value: 1.5, kind: literature, use: model, source: "CH22 Eq. (38): Z readout error exp(-1.5 - 0.9 |a|^2), T_measure ~ 850 ns"}
+  well_b: {value: 0.9, kind: literature, use: model, source: "same"}
+
+timing:
+  kappa2_MHz: {value: 1.59, kind: literature, use: model,
+               source: "GO23 p. 4: kappa2/2pi = 1.59 MHz, 1/kappa2 = 100 ns (only absolute times depend on it)"}
+
+reference_point:
+  nbar: {value: 8.0, source: "LR23 Fig. 4b (|a|^2 = 8)"}
+  eta: {value: 1.0e-3, source: "below the LR23 threshold 2.3e-3 at |a|^2 = 8"}
+
+validation:  # used only to test the model (examples/literature_checks_models.py)
+  fig4b_fit: {a: 3.2e-2, c: 0.44, eta_th: 2.3e-3, kind: literature, use: validation,
+              source: "LR23 Fig. 4b caption: p_ZL = a d (eta/eta_th)^(c d) for a d-round memory + perfect round (App. A), |a|^2 = 8"}

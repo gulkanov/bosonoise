@@ -1,0 +1,202 @@
+# =====================================================================================
+# Ocelot (AWS) repetition-cat-code device -- parameters extracted from the paper
+#   H. Putterman et al., "Hardware-efficient quantum error correction via concatenated
+#   bosonic qubits", Nature 638, 927 (2025); arXiv:2409.13025 (v2; PDF created 2025-03-24).
+# Extracted 2026-09-28 from the arXiv v2 PDF (60 pp.; printed page numbers = PDF pages).
+#
+# Conventions: f = omega/2pi. Units are in the key names (GHz, MHz, kHz, us, ns).
+# kind:
+#   measured      -- reported measurement
+#   aws_model     -- output of AWS's numerical model (e.g. their DMRG-X circuit model)
+#   aws_design    -- design target / design statement
+#   aws_fitted    -- parameter AWS tuned to error-rate data (NEVER used by us for calibration)
+#   derived       -- computed by us from reported numbers (formula given)
+# use:
+#   calibration   -- may be used to calibrate our Hamiltonian (static spectroscopy only)
+#   validation    -- error-rate / dynamics data: used ONLY to test predictions
+#   context       -- protocol/timing information
+# =====================================================================================
+
+meta:
+  paper: "Putterman et al., Nature 638, 927 (2025), arXiv:2409.13025v2"
+  companion_paper: "Putterman et al., arXiv:2409.17556 (ref. [25] of the paper; ATS buffer, tunable dispersive coupling) -- NOT yet read"
+  extracted_on: "2026-09-28"
+  layout: "S1 C1 A1 C2 S2 C3 A2 C4 S3 C5 A3 C6 S4 C7 A4 C8 S5; buffer Bi on Si; readout Ri on Ai (Fig. 9a, p.22)"
+  code: "repetition code d=5 (S1..S5 data cats, A1..A4 ancilla transmons); two d=3 sections"
+
+# ------------------------------------------------------------------ mode frequencies
+# Fig. 9b, p.22: measured with ALL couplers at their idle (maximum-frequency) position.
+storage:
+  S1: {f_GHz: 5.24, T1_us: 76, T2_us: 82, T1_under_2ph_diss_us: 59, T2_under_2ph_diss_us: 59}
+  S2: {f_GHz: 5.28, T1_us: 71, T2_us: 58, T1_under_2ph_diss_us: 68, T2_under_2ph_diss_us: 47}
+  S3: {f_GHz: 5.31, T1_us: 61, T2_us: 116, T1_under_2ph_diss_us: 53, T2_under_2ph_diss_us: 73}
+  S4: {f_GHz: 5.36, T1_us: 75, T2_us: 116, T1_under_2ph_diss_us: 58, T2_under_2ph_diss_us: 64}
+  S5: {f_GHz: 5.41, T1_us: 68, T2_us: 82, T1_under_2ph_diss_us: 56, T2_under_2ph_diss_us: 57}
+  _source: "Fig. 9b (f), 9e-h (T1,T2 without/with pure two-photon dissipation), p.22; averages over the rep-code run (App. F1-F2, pp.21-23)"
+  _kind: measured
+  _use: calibration (f); context (T1, T2)
+  _notes:
+    - "storage modes are CPW resonators on the tantalum die (App. E, p.21; App. A, p.14)"
+    - "effective storage lifetime under 2-photon dissipation T1,eff = 57-68 us from phase flips (main text p.4)"
+
+ancilla:
+  A1: {f_ge_GHz: 5.20, T1_ge_us: 33, T1_ef_us: 16, readout_ns: 200}
+  A2: {f_ge_GHz: 5.21, T1_ge_us: 25, T1_ef_us: 24, readout_ns: 200}
+  A3: {f_ge_GHz: 5.21, T1_ge_us: 35, T1_ef_us: 21, readout_ns: 200}
+  A4: {f_ge_GHz: 5.32, T1_ge_us: 41, T1_ef_us: 25, readout_ns: 304}
+  _source: "Fig. 9b-d, p.22 (couplers off; 'representative snapshot', T1 fluctuates); readout lengths App. F3, p.24"
+  _kind: measured
+  _use: calibration (f_ge); context (T1)
+  _missing: "anharmonicities / f_ef of A1..A4 are NOT reported. Fig. 7a (AWS model of A2) gives f_ef = 5.0006 GHz at Phi=0.249 -> alpha ~ -207 MHz."
+  _notes:
+    - "A1, A2 anharmonicities were tuned by ~5% via die capacitance, lowering f by ~100 MHz (App. E, p.21)"
+    - "ancilla T1 depends on coupler flux (Fig. 18c, p.31; App. J2)"
+
+buffer:
+  B1: {f_GHz: 3.18, kappa_b_MHz: 14.2}
+  B2: {f_GHz: 3.25, kappa_b_MHz: 19.9}
+  B3: {f_GHz: 3.14, kappa_b_MHz: 9.8}
+  B4: {f_GHz: 3.02, kappa_b_MHz: 19.6}
+  B5: {f_GHz: 3.31, kappa_b_MHz: 14.3}
+  _source: "Fig. 9b p.22 (f); Fig. 13a p.25 (f_b, loaded kappa_b from |S21| fits)"
+  _kind: measured
+  _use: calibration
+  circuit: "ATS with additional inductors in series with the two side junctions (App. D1, p.18)"
+  filter: "4-pole metamaterial bandpass filter per buffer, bandwidth ~1 GHz, sharp roll-off (App. D1, p.18)"
+  bias: "each buffer at one of its two saddle points, inside the filter passband (App. F5, p.25)"
+  predicted_nonlinearities:  # AWS circuit model, p.18
+    most_cells: {K_s_over_2pi_kHz: "|K_s| < 2", chi_sb_over_2pi_kHz: "|chi_sb| < 120", kind: aws_model}
+    S4_cell: {K_s_over_2pi_kHz: 2.7, chi_sb_over_2pi_kHz: 390, g2_over_2pi_kHz: 400, kind: aws_model,
+              note: "mis-targeted buffer junction energies; worst bit-flip cell"}
+
+two_photon_dissipation:
+  S1: {g2_kHz: 309, g2_err_kHz: 1, kappa2_kHz: 27}
+  S2: {g2_kHz: 397, g2_err_kHz: 2, kappa2_kHz: 32}
+  S3: {g2_kHz: 399, g2_err_kHz: 2, kappa2_kHz: 65}
+  S4: {g2_kHz: 399, g2_err_kHz: 2, kappa2_kHz: 32}
+  S5: {g2_kHz: 446, g2_err_kHz: 2, kappa2_kHz: 56}
+  _source: "Fig. 13b, p.25 (fit of vacuum-population rise to a master-equation model, |alpha|^2=7 start); ranges quoted in App. F5 p.26"
+  _kind: measured (model-assisted fit)
+  _use: calibration
+  _check: "kappa2 = 4 g2^2 / kappa_b reproduces all five values to <2% (derived)"
+  pump: "sigma-flux pump at f_p = 2 f_s' - f_b' (Stark-shifted), App. D1 p.18; storage detuning calibrated to <~1 kHz, buffer detuning to ~1 MHz (App. F5, p.26)"
+  buffer_detuning_Delta_b0_MHz: -2   # App. F8, p.31 (estimated from dissipative-map asymmetry), kind: measured (inferred)
+  parasitic_sideband: "a b^3 + h.c. type process, resonance 2 f_p ~ f_s + 3 f_b; heats storage in some cells (App. D1 p.18; App. F2 p.23; Fig. 10)"
+  weak_pumping_cells: "in some cells both saddle points suffer pump-induced resonances -> weaker pumping, weaker g2 (e.g. S6 mentioned [sic], App. F5 p.26)"
+  stabilization_when: "two-photon dissipation OFF during CX flux pulses, ON between gates (App. D intro, p.17)"
+
+readout:
+  R1: {f_GHz: 7.23}
+  R2: {f_GHz: 7.59}
+  R3: {f_GHz: 7.34}
+  R4: {f_GHz: 7.33}
+  _source: "Fig. 9b, p.22"
+  _kind: measured
+  kappa_r_over_2pi_MHz: "> 5 (all readout resonators), App. F3 p.23"
+  purcell: "single-pole lambda/4 Purcell filter; TWPA (App. F3, p.23)"
+  timing: {integration_extra_ns: 80, ringdown_ns: 64, reset_ns: 504, source: "App. F3, pp.23-24"}
+  reset_scheme: "drive |f0> <-> |g1> (ancilla-readout) + |e> <-> |f> simultaneously (App. F3, p.24)"
+  spam_ge: "< 2% on all ancillas, mean 1.5% (App. F3, p.24)"
+  note_MIST: "readout drive amplitude/length tuned to avoid measurement-induced state transitions that may excite ancilla AND coupler to highly excited states (App. F3, p.24)"
+
+coupler:
+  type: "flux-tunable transmon, idles at maximum frequency ('off', Phi=0); CX at minimum frequency ('on', Phi=Phi0/2)"
+  f_max_GHz: "> 8.5 (all couplers)"
+  f_min_GHz: "6.25 - 6.75 (range over couplers)"
+  _source: "App. F1, p.21; App. D, p.17"
+  _kind: measured
+  A2_S3_model: {f_at_Phi0_GHz: 9.0, f_at_half_Phi0_GHz: 6.6, kind: aws_model, source: "App. D3, p.19"}
+  design: "coupler-ancilla coupling designed much stronger than coupler-storage coupling (App. D3, p.20)"
+  _missing: "per-coupler f_max, f_min, anharmonicity, flux-pulse amplitude calibration; coupler coherence"
+  kappa_c_assumed_by_AWS: {value: "1/(10 us), kappa_c_up/kappa_c = 1e-3", kind: aws_model,
+                           source: "companion paper arXiv:2409.17556v2 p.28 (assumption in their coupler-heating simulations, different device); NOT a measurement"}
+
+# ------------------------------------------------------------------ CX gate
+interactions:
+  # measured at the 'on' point (coupler at minimum frequency), Fig. 12 p.24 (+-0.01 MHz each)
+  A1_S1: {chi_ge_MHz: -2.65, chi_gf_MHz: -2.37}
+  A1_S2: {chi_ge_MHz: -1.80, chi_gf_MHz: -1.69}
+  A2_S2: {chi_ge_MHz: -1.49, chi_gf_MHz: -1.36}
+  A2_S3: {chi_ge_MHz: -1.18, chi_gf_MHz: -1.14}
+  A3_S3: {chi_ge_MHz: -0.97, chi_gf_MHz: -0.98}
+  A3_S4: {chi_ge_MHz: -1.41, chi_gf_MHz: -1.63}
+  A4_S4: {chi_ge_MHz: -1.88, chi_gf_MHz: -1.45}
+  A4_S5: {chi_ge_MHz: -1.70, chi_gf_MHz: -1.65}
+  _source: "Fig. 12, p.24 (storage conditional-phase vs flux-pulse length)"
+  _kind: measured
+  _use: calibration
+  _notes:
+    - "realized chi_ge/chi_gf range 0.85-1.3 (App. F4, p.25); A4-S4 worst (~1.3) due to small storage-ancilla detuning at 'on' (Fig. 12 caption)"
+    - "A2-S3: chi_ge/chi_gf measured 1.04; AWS circuit model 1.05; naive Eq. (D5) 1.13 (App. D3, p.20)"
+    - "A1, A2 matching ratios 1.03-1.12 after frequency targeting (App. E, p.21)"
+  storage_ancilla_detuning_off_MHz: "40 - 150 across cells (App. D3, p.20); from Fig. 9b: S1-A1 40, S2-A1 80, S2-A2 70, S3-A2 100, S3-A3 100, S4-A3 150, S4-A4 40, S5-A4 90 (derived)"
+
+cx_gate:
+  ancilla_basis: "(g, f); chi-matching chi_ge = chi_gf makes single f->e decays first-order harmless (App. D, p.17)"
+  design_target: {chi_gf_MHz: -1.35, gate_ns: "~500", tolerance_chi_ratio: "0.8 <~ chi_ge/chi_gf <~ 1.2", source: "App. E p.21; App. D3 p.20", kind: aws_design}
+  kerr_model_rule: "chi-matching when f_s = f_q - K_q, i.e. storage above ancilla by |anharmonicity| (Eq. D6, p.19)"
+  pulse_shape: "flat-top Gaussian flux pulse; coupler pulsed from max to min frequency (App. F7, p.28)"
+  ramp_ns: {A1_S1: 64, A4_S4: 64, others: "not reported", source: "App. F7, p.28"}
+  gate_lengths_rep_code_ns: "292 - 552 (main text p.6)"
+  cx_lengths_fig12_ns:  # vertical lines of Fig. 12 (p.24), tools/extract_ocelot_fig12_gates.py; g/f manifold
+    {A1_S1: 291.5, A1_S2: 343.5, A2_S2: 391.8, A2_S3: 479.8, A3_S3: 552.2, A3_S4: 344.2, A4_S4: 424.6, A4_S5: 336.6}
+  cx_lengths_fig12_note: "purple line = g/f per the main text p.25 (caption says the opposite); confirmed by the chi ordering, by the rep-code range 292-552 ns (p.6) and by the A1-S1 CX2 length: purple + 1/(2|chi_gf|) = 503 ns vs 504 ns stated (p.5)"
+  cx2_lengths_derived_ns:  # L_CX(g/f) + 1/(2|chi_gf|), kind: derived
+    {A1_S1: 503, A1_S2: 640, A2_S2: 759, A2_S3: 918, A3_S3: 1062, A3_S4: 651, A4_S4: 769, A4_S5: 640}
+  cx2_A1_S1_ns: 504   # main text p.5
+  nonadiabatic_warning: "flux pulse spectral content at the storage-ancilla detuning induces iSWAP-like storage<->ancilla exchange -> ancilla heating/decay and cat bit flips (App. D3 p.20; App. F7 p.28)"
+  resonance_statement: "storage self-Kerr smooth vs coupler flux -> 'free of undesired resonances' (App. D3, p.20). NB: statement concerns n<=2 Kerr only, Phi in [0.25,0.5]"
+
+cycle:
+  rep_code_T_cycle_us: 2.8          # main text p.6; App. C p.17; App. G5 p.36
+  cx2_characterization_cycle_us: 3.0  # main text p.5; App. F7 p.27
+  ancilla_prep: "|g>+|f> via ge pi/2 and two ef pi pulses (App. G5, p.36)"
+  stabilization: "on all cats during ancilla measurement+reset (main text p.6)"
+  _missing: "exact timing diagram of flux pulses, stabilization windows and paddings per cycle (Fig. 21-23 of App. G to be digitized)"
+
+# ------------------------------------------------------------------ AWS model of A2-S3 (Fig. 7)
+aws_model_A2_S3:
+  file: "data/digitized/ocelot_fig7.csv"
+  what: "vector-extracted curves of Fig. 7 (p.19): f_s, f_ge, f_ef, chi_ge, chi_gf, chi ratio (numerics & Eq. D5), K_s|g,e,f vs coupler flux 0.249..0.5"
+  kind: aws_model
+  use: "calibration target (paper App. A.2); caveat -- model output, not raw data"
+  model_scope: "DMRG-X; includes storage, ancilla, coupler, buffer + buffer series-inductor modes, readout resonator, second coupler (App. D3, p.19)"
+  key_values: {flux_0.25: {f_s: 5.3099, f_ge: 5.2075, f_ef: 5.0006, chi_ge_MHz: -0.033, chi_gf_MHz: -0.029, K_s_kHz: 1.76},
+               flux_0.50: {f_s: 5.3083, f_ge: 5.1765, f_ef: 4.9851, chi_ge_MHz: -1.095, chi_gf_MHz: -1.044,
+                           K_g_kHz: -3.67, K_e_kHz: 3.86, K_f_kHz: -1.10}}
+
+# ------------------------------------------------------------------ VALIDATION ONLY (never calibrate on these)
+validation:
+  cx2_A1_S1:
+    source: "main text Sec. III p.5 (numbers); Fig. 2c on p.4"
+    chi_ratio: "~1.1"
+    alpha2_2: {pX_per_cycle: 3.5e-3, pX_err: 0.4e-3, pZ_per_cycle: 9.6e-2, pZ_err: 0.4e-2, cycle_us: 3.0}
+    T1_eff_us: {with_cx2: "63 +- 2", without: "68 +- 2"}
+    note: "with ancilla |g>: T_X > 5 ms; small degradation at |alpha|^2>=3 attributed to ancilla/coupler heating (p.5). pX_per_cycle is the Pauli probability T_cycle/T_X. Fig. 2c = the A1-S1 panel of Fig. 16 (data/digitized/ocelot_fig2c.csv); the Fig. 15d fit decay constants (data/digitized/ocelot_fig15d_fits.csv) are T_X/2."
+  cx2_all_pairs: "Fig. 16, p.29 (8 interactions; static, |g>,|g+e>,|f>,|g+f>; 5 days after the rep-code run) -- vector-extracted: data/digitized/ocelot_fig16.csv (T_X = inverse Pauli rate, so Pauli p = [1 - exp(-2 T_cycle/T_X)]/2 ~ T_cycle/T_X; paper App. C.2)"
+  appJ_ancilla_T1:
+    source: "App. J1-J2, pp.50-53; Figs. 35-37"
+    lambda_needed_in_sim_at_alpha2_4: 2.5   # kind: aws_fitted; App. J2 p.52
+    lambda_measured_pulsed_alpha2_4: 1.5     # App. J2 p.52 (Fig. 37d, pulsed T1 with |alpha|^2=4)
+    tuned_in_AWS_sims: "storage dephasing, coupler heating (at |alpha|^2=4, all heating modelled as coupler heating), ancilla decay (factor lambda) -- aws_fitted, not usable by us"
+    state_prep_f_as_g: "0.7% average (measured); 1% f->e assumed in sims (p.51)"
+    fig37_A4_S5_alpha2_3p5: {pX_f_no_postsel: "~2e-3", pX_f_postsel: "~5.5e-4", pX_g: "~6.5e-4", note: "bar heights read by eye from Fig. 37a, p.53"}
+    long_time_fit_g_pX: "(2.5 +- 0.2)e-3 (Fig. 37 caption, p.53)"
+    erasure_probability: "p_e ~ 5% -> T1(f->e) ~ 12.5 us over ~1.25 us (p.53)"
+    T_CX_ns: "~400 (A4-S5, p.53)"
+    readout_not_cause: "Fig. 37c"
+    pulsed_T1: "Fig. 37d: T1(e), T1(f) coupler held on / pulsed (1.6 us cycles) / pulsed with |alpha|^2=4 -- vector-extracted: data/digitized/ocelot_fig37d.csv; means e 34.3/30.3/23.9 us, f 20.3/16.0/15.1 us"
+    open_questions_by_AWS: "predictive CX error modelling from independent measurements = 'important future direction'; direct f->g double decay and storage-photon-number-dependent ancilla T1 = 'important areas of future investigations' (p.53)"
+  appF9_direct_f_to_g:
+    source: "App. F9, Fig. 18b, pp.31-32"
+    pair: A4_S4
+    protocol: "prepare |f>, 800 ns flux pulse to 'on', read g/e/f; storage in coherent state |alpha|^2 = 0..20"
+    cooldown: "DIFFERENT temperature cycle than the rep-code run"
+    observation: "P_g rises from ~0.02 (|alpha|^2=0) to ~0.10 (|alpha|^2 ~ 9-12), ~0.05 at 20; P_e ~0.08 -> ~0.12 around |alpha|^2~3-7; P_f 0.91 -> ~0.80 (min near |alpha|^2~6-10). Read by eye from Fig. 18b; vector data extractable."
+    AWS_hypothesis: "e.g. TLS mediating a multi-photon process involving ancilla, coupler and storage photons"
+  appF9_TLS_A3_S3: "Fig. 18c p.31: ancilla (in |e>) T1 vs coupler flux: multiple TLS (strong one near Phi ~0.22-0.23 Phi0) -- vector-extracted: data/digitized/ocelot_fig18c.csv (T1 per flux row; smooth decline ~38 -> ~22 us toward Phi0/2)"
+  logical:
+    min_eps_L: {d3: "1.75(2)% (abstract), sections 1.83(3)% and 1.67(4)% at |alpha|^2=1", d5: "1.65(3)% at |alpha|^2=1.5", source: "p.1, p.8"}
+    bit_flip_per_cycle: "d=5: ~4% at |alpha|^2=1, <1% at |alpha|^2=4 (p.8, Fig. 4)"
+    fig4b_fig31: "vector-extracted: data/digitized/ocelot_fig4b.csv (data + AWS phenomenological model lines) and data/digitized/ocelot_fig31.csv (by initial state; ancilla g+f and the ancilla-in-g control); eps = T_cycle/(2 T_Z), T_cycle = 2.8 us (Eq. C2)"
+    phenomenological_bitflip_model: "App. I2 p.49: p_idle = A exp(-B|alpha|^2) per cat + |alpha|^2-independent p_CX per gate from CX2 fits at |alpha|^2>=3"

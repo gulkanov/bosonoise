@@ -1,0 +1,163 @@
+{
+  "dataset": "ocelot_nbar3_d5_Z",
+  "code": {
+    "family": "repetition cat code",
+    "distance": 5,
+    "rounds": 5,
+    "basis": "Z",
+    "layout": "cats 0..d-1, ancillas d..2d-2; stabilizer j = X_j X_{j+1}; CX(ancilla j -> cat j) then (-> cat j+1)",
+    "observable": "Z_1 ... Z_d"
+  },
+  "noise_model": {
+    "name": "ocelot(nbar=3, lambda3, T1eff=57 us, Tc=2.8 us)",
+    "model": "ocelot",
+    "nbar": 3.0,
+    "knobs": {
+      "variant": "lambda3",
+      "T1_eff_us": 57.0,
+      "T_cycle_us": 2.8
+    },
+    "is_reference_point": false,
+    "reference_point": {
+      "nbar": 2.0,
+      "variant": "lambda3",
+      "T1_eff_us": 57.0,
+      "T_cycle_us": 2.8
+    },
+    "grid_nbar": [
+      2.0,
+      1.0,
+      3.0,
+      4.0
+    ],
+    "parameters": {
+      "p_data": [
+        [
+          0.0005327143195512085,
+          0.0,
+          0.12891443856728851
+        ],
+        [
+          0.0004892814706453641,
+          0.0,
+          0.12891443856728851
+        ],
+        [
+          0.00020799382816460987,
+          0.0,
+          0.12891443856728851
+        ],
+        [
+          0.0008387039317673262,
+          0.0,
+          0.12891443856728851
+        ],
+        [
+          0.0003479903416440666,
+          0.0,
+          0.12891443856728851
+        ]
+      ],
+      "f_mid": 0.2,
+      "p_stab_x": [
+        [
+          5.754699999999981e-05,
+          0.001218206,
+          0.000388624
+        ],
+        [
+          1.436599999999976e-05,
+          0.0015486670000000007,
+          0.00030854300000000004
+        ],
+        [
+          2.5849999999998812e-06,
+          0.001549471,
+          0.00041633900000000016
+        ],
+        [
+          0.00017215099999999994,
+          0.0010420289999999997,
+          0.00042136099999999987
+        ]
+      ],
+      "cx_channel": {},
+      "p_meas": [
+        0.0257895,
+        0.01681948,
+        0.015267175,
+        0.026842200000000004
+      ],
+      "p_herald": [
+        0.07274675880439263,
+        0.05617219972066319,
+        0.06540215996259749,
+        0.0532161569583592
+      ],
+      "p_prep": 0.0,
+      "p_data_meas": 0.015,
+      "p_data_meas_z": null,
+      "p_data_herald_x": 0.0,
+      "leak_data": {
+        "p_leak": 0.0,
+        "p_return": 1.0,
+        "partner": {},
+        "pair": {},
+        "randomize_measurement": true,
+        "dephase_self": false,
+        "heralded": false,
+        "return_paulis": "XZ"
+      },
+      "leak_anc": {
+        "p_leak": 0.0004,
+        "p_return": 0.5,
+        "partner": {},
+        "pair": {},
+        "randomize_measurement": true,
+        "dephase_self": false,
+        "heralded": true,
+        "return_paulis": "XZ"
+      }
+    },
+    "provenance": {
+      "p_data[X]": "DATA-DERIVED idle bit flip, Ocelot Fig. 16 static (Putterman et al., Nature 638, 927 (2025)); continuation A exp(-B nbar) beyond |alpha|^2 = 4",
+      "p_data[Z]": "kappa_1,eff (nbar (1 + 2 n_th) + n_th) T_cycle with T1,eff = 57.0 us (default: Ocelot Fig. 30 mean, rep-code run) and n_th = 0.005 (prior)",
+      "f_mid": "share of phase flips between a cat's two CX gates; 0.2 from the space-like/diagonal detector-pair split of the raw data (paper App. H) and the pulse timing",
+      "p_stab_x": "our dressed-ladder ULE fault tables, variant lambda3 (paper Sec. 4, App. D)",
+      "p_meas": "SPAM 0.015 (Ocelot App. F3) + our dispersive-phase syndrome error, fixed_gate (paper App. H); the measured growth with |alpha|^2 is only partly explained",
+      "p_herald": "our f->e herald over the gates and the other layer's gate (paper App. H) + f->e during the readout of odd outcomes (readout + 80 ns / T1_ef, Ocelot Fig. 9d, App. F3)",
+      "p_data_meas": "SPAM 0.015 of the g/e ancilla readout used for both the parity and the well (Z) readout (Ocelot App. F3; the Z readout fidelity vs |alpha|^2 of Fig. 19b is not digitized)",
+      "leak_anc": "DATA-DERIVED: excess persistence of erasures between rounds, 0.2-0.6% (examples/zenodo_erasure_ocelot.py; paper App. H) -> p_leak 4e-4 per round with mean duration 2 rounds; heralded, outcome random; effect on the cats unknown (none assumed)",
+      "leak_data": "none: two-photon stabilization returns the cats to the code space; excursions are converted into bit/phase flips (our conversion map, paper Sec. 4, App. D)"
+    }
+  },
+  "generator": {
+    "package": "bosonoise",
+    "version": "0.1.0",
+    "git_commit": "1f4e3644403897d6f7e0703153937f8be9d6be5a",
+    "script": "examples/noise_model_datasets.py",
+    "seed": 25002,
+    "sampler": "stim.FlipSimulator + leakage in the incoherent approximation (dem/noise_models.py)"
+  },
+  "layout": {
+    "heralds": "round-major; per round the d-1 syndrome-erasure heralds of ancillas 0..d-2 (kind 1: ancilla found outside the qubit subspace, outcome random), then, if the model has them, the heralded bit flips of cats 0..d-1 (kind 2); the same bits are the herald detectors of detectors.b8, coordinates (x, round, kind); kind 0 = syndrome detectors",
+    "leakage": "rounds x (cats then ancillas) (round-major); 1 = leaked during that round"
+  },
+  "baseline_decoding": {
+    "decoder": "X basis: PyMatching 2 on the circuit DEM (leakage not in the DEM), correlated matching with the heralds; Z basis: none (no Z stabilizers), heralded cat bit flips undone",
+    "logical_failure_with_heralds": 0.15485,
+    "logical_failure_without_heralds": 0.15485,
+    "logical_error_per_round_from_R_d_and_3d": 0.00897802946403875,
+    "logical_error_per_round_std": 0.000612666989677329,
+    "note": "Z basis: the failure is the odd-parity probability of all cats, including the initial and final well readout"
+  },
+  "schema_version": "0.1",
+  "created": "2026-10-01T04:31:12+00:00",
+  "shots": 20000,
+  "num_detectors": 36,
+  "num_observables": 1,
+  "optional_arrays": {
+    "heralds": 20,
+    "leakage": 45
+  }
+}

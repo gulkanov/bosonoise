@@ -1,0 +1,142 @@
+{
+  "dataset": "allcat_nbar3_d3_Z",
+  "code": {
+    "family": "repetition cat code",
+    "distance": 3,
+    "rounds": 3,
+    "basis": "Z",
+    "layout": "cats 0..d-1, ancillas d..2d-2; stabilizer j = X_j X_{j+1}; CX(ancilla j -> cat j) then (-> cat j+1)",
+    "observable": "Z_1 ... Z_d"
+  },
+  "noise_model": {
+    "name": "allcat(nbar=3, eta=0.001, n_th=0, herald_eff=0.5)",
+    "model": "allcat",
+    "nbar": 3.0,
+    "knobs": {
+      "eta": 0.001,
+      "n_th": 0.0,
+      "herald_efficiency": 0.5
+    },
+    "is_reference_point": false,
+    "reference_point": {
+      "nbar": 8.0,
+      "eta": 0.001,
+      "n_th": 0.0,
+      "herald_efficiency": 0.0
+    },
+    "grid_nbar": [
+      8.0,
+      3.0,
+      4.0,
+      6.0
+    ],
+    "parameters": {
+      "p_data": [
+        [
+          3.686527411996926e-08,
+          3.686527411996926e-08,
+          0.012
+        ],
+        [
+          2.7648955589976944e-08,
+          2.7648955589976944e-08,
+          0.009000000000000001
+        ],
+        [
+          3.686527411996926e-08,
+          3.686527411996926e-08,
+          0.012
+        ]
+      ],
+      "f_mid": 0.3333333333333333,
+      "p_stab_x": null,
+      "cx_channel": {
+        "ZI": 0.056,
+        "IZ": 0.0015,
+        "ZZ": 0.0015,
+        "XI": 5.16406703472158e-05,
+        "IX": 5.16406703472158e-05,
+        "YI": 5.16406703472158e-05,
+        "YX": 5.16406703472158e-05,
+        "XX": 5.16406703472158e-05,
+        "ZX": 5.16406703472158e-05,
+        "IY": 5.16406703472158e-05,
+        "XY": 5.16406703472158e-05,
+        "XZ": 5.16406703472158e-05,
+        "YY": 5.16406703472158e-05,
+        "YZ": 5.16406703472158e-05,
+        "ZY": 5.16406703472158e-05
+      },
+      "p_meas": 0.006,
+      "p_herald": 0.0,
+      "p_prep": 0.003,
+      "p_data_meas": 0.003,
+      "p_data_meas_z": 0.014995576820477703,
+      "p_data_herald_x": 0.0008262507255554528,
+      "leak_data": {
+        "p_leak": 0.0,
+        "p_return": 1.0,
+        "partner": {},
+        "pair": {},
+        "randomize_measurement": true,
+        "dephase_self": false,
+        "heralded": false,
+        "return_paulis": "XZ"
+      },
+      "leak_anc": {
+        "p_leak": 0.0,
+        "p_return": 1.0,
+        "partner": {},
+        "pair": {},
+        "randomize_measurement": true,
+        "dephase_self": false,
+        "heralded": false,
+        "return_paulis": "XZ"
+      }
+    },
+    "provenance": {
+      "preset": "presets/allcat.yaml (every literature number with its page and equation)",
+      "cycle": "LR23 Sec. 3 / GO23 App. D: prep, CNOT, refresh, CNOT, M_X, each 1/kappa2 = 100 ns (kappa2/2pi = 1.59 MHz, GO23 p. 4)",
+      "cx_channel[Z]": "LR23 Eqs. (3)-(4): Z_a = |a|^2 kappa1 T + 0.159/(|a|^2 kappa2 T), Z_d = Z_aZ_d = |a|^2 kappa1 T/2, T = 1/kappa2",
+      "cx_channel[bit flips]": "LR23 p. 8 and GO23 Eq. (D8): 0.5 exp(-2|a|^2) summed over 12 bit-flip-type Paulis; split equally among them (assumption: no published split at T = 1/kappa2)",
+      "p_data": "idle Z |a|^2 kappa1 T per step (LR23 pp. 7-8, CH22 Eq. (D4)) for 3 steps (4 for the two boundary cats, idle during the other CNOT layer), so that every cat has 5 |a|^2 eta per round (LR23 p. 8); idle X = Y = 0.5 kappa1 |a|^2 T exp(-4|a|^2) per step (CH22 Table II)",
+      "f_mid": "1/3: the refreshing step lies between a data cat's two CNOTs (LR23 Fig. 4 inset)",
+      "p_prep/p_meas": "ancilla preparation, refresh and X measurement each |a|^2 kappa1 T (LR23 pp. 7-8); data readout the same",
+      "p_data_meas_z": "well (Z) readout exp(-1.5 - 0.9 |a|^2) (CH22 Eq. (38), T_measure ~ 850 ns)",
+      "thermal": "kappa1 -> kappa1 (1 + 2 n_th) (CH22 App. D), n_th = 0.0",
+      "leakage": "none: with T = 1/kappa2 and refreshing steps the leakage stays below the bit-flip probability (LR23 Sec. 2.3)",
+      "heralds": "data bit-flip heralds with efficiency 0.5 (buffer emission, Ferrari et al., arXiv:2607.01375; shown for idle flips, assumed here for gate flips)",
+      "validation": "reproduces the circuit-level logical phase-flip fit of LR23 Fig. 4b (examples/literature_checks_models.py)",
+      "herald_efficiency": "herald efficiency 0.5: of the order of our estimate for gate-induced errors in the hybrid cell (36-53% heralded at a useful false-herald rate, paper App. I); every bit flip of a stabilized dissipative cat comes with a buffer-emission burst (Ferrari et al., arXiv:2607.01375); no calculation for the all-cat CNOT; false heralds are not modelled (a herald is always a real flip)"
+    }
+  },
+  "generator": {
+    "package": "bosonoise",
+    "version": "0.1.0",
+    "git_commit": "1f4e3644403897d6f7e0703153937f8be9d6be5a",
+    "script": "examples/noise_model_datasets.py",
+    "seed": 113002,
+    "sampler": "stim.FlipSimulator + leakage in the incoherent approximation (dem/noise_models.py)"
+  },
+  "layout": {
+    "heralds": "round-major; per round the d-1 syndrome-erasure heralds of ancillas 0..d-2 (kind 1: ancilla found outside the qubit subspace, outcome random), then, if the model has them, the heralded bit flips of cats 0..d-1 (kind 2); the same bits are the herald detectors of detectors.b8, coordinates (x, round, kind); kind 0 = syndrome detectors",
+    "leakage": "rounds x (cats then ancillas) (round-major); 1 = leaked during that round"
+  },
+  "baseline_decoding": {
+    "decoder": "X basis: PyMatching 2 on the circuit DEM (leakage not in the DEM), correlated matching with the heralds; Z basis: none (no Z stabilizers), heralded cat bit flips undone",
+    "logical_failure_with_heralds": 0.0853,
+    "logical_failure_without_heralds": 0.09145,
+    "logical_error_per_round_from_R_d_and_3d": 0.002153100404268249,
+    "logical_error_per_round_std": 0.0005821962540142531,
+    "note": "Z basis: the failure is the odd-parity probability of all cats, including the initial and final well readout"
+  },
+  "schema_version": "0.1",
+  "created": "2026-10-01T04:31:35+00:00",
+  "shots": 20000,
+  "num_detectors": 19,
+  "num_observables": 1,
+  "optional_arrays": {
+    "heralds": 15,
+    "leakage": 15
+  }
+}

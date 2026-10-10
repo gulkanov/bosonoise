@@ -1,0 +1,8 @@
+bosonoise
+Copyright 2026 Aleksandr Gulkanov
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Data produced by this project (calibrations, crossing atlases, syndrome datasets under
+data/) are licensed separately; see data/LICENSE.md. Numbers extracted from third-party
+publications (data/digitized/) remain attributable to their original authors.

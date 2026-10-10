@@ -1,0 +1,15 @@
+# Coupler T1 at 'on' implied by the storage decay measured during the gates (target_rate = extra storage loss rate to explain; ancilla_part = the part from the idle-referenced ancilla bath). examples/coupler_from_storage_ocelot.py
+input,case,storage,target_rate_per_ms,ancilla_part_per_ms,T1c_us
+A1-S1 with/without CX2 (p.5),central,S1,6.968,0.6124,0.399
+A1-S1 with/without CX2 (p.5),low,S1,12.58,0.6124,0.2118
+A1-S1 with/without CX2 (p.5),high,S1,1.392,0.6124,3.254
+rep-code T1,eff (Fig. 30) vs idle (Fig. 9), ancilla in g,central,S1,3.368,0.09563,0.121
+rep-code T1,eff (Fig. 30) vs idle (Fig. 9), ancilla in f,central,S1,3.368,0.001269,0.4595
+rep-code T1,eff (Fig. 30) vs idle (Fig. 9), ancilla in g,central,S2,5.835,0.1472,0.1812
+rep-code T1,eff (Fig. 30) vs idle (Fig. 9), ancilla in f,central,S2,5.835,0.001919,0.5059
+rep-code T1,eff (Fig. 30) vs idle (Fig. 9), ancilla in g,central,S3,3.584,0.1151,0.4036
+rep-code T1,eff (Fig. 30) vs idle (Fig. 9), ancilla in f,central,S3,3.584,0.001246,0.9231
+rep-code T1,eff (Fig. 30) vs idle (Fig. 9), ancilla in g,central,S4,2.636,0.1275,0.476
+rep-code T1,eff (Fig. 30) vs idle (Fig. 9), ancilla in f,central,S4,2.636,0.001346,1.179
+rep-code T1,eff (Fig. 30) vs idle (Fig. 9), ancilla in g,central,S5,1.789,0.04099,0.3296
+rep-code T1,eff (Fig. 30) vs idle (Fig. 9), ancilla in f,central,S5,1.789,0.0005733,0.852

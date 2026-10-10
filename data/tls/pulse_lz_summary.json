@@ -1,0 +1,39 @@
+{
+  "args": {
+    "nreal": 20000,
+    "area_um2": [
+      0.05,
+      0.15
+    ],
+    "ramp": 20.2,
+    "surf_T1_us": 100.0,
+    "idle_tol": 1.5,
+    "seed": 20261002
+  },
+  "target_fig37d": {
+    "f": 0.03,
+    "e": 0.011
+  },
+  "results": {
+    "A_J=0.05": {
+      "acceptance": 0.6889424733034791,
+      "mean_extra_e": 0.0001816778858294009,
+      "mean_extra_f": 0.00018539123590071406,
+      "frac_e_ge_target": 0.0008,
+      "frac_f_ge_target": 0.0001,
+      "frac_both": 0.0,
+      "frac_any_crossing_e": 0.70285,
+      "frac_any_crossing_f": 0.43495
+    },
+    "A_J=0.15": {
+      "acceptance": 0.41948948130125635,
+      "mean_extra_e": 0.00018563487327055378,
+      "mean_extra_f": 0.00021287575722621127,
+      "frac_e_ge_target": 0.0015,
+      "frac_f_ge_target": 0.0002,
+      "frac_both": 0.0,
+      "frac_any_crossing_e": 0.71185,
+      "frac_any_crossing_f": 0.44225
+    }
+  }
+}

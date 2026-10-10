@@ -1,0 +1,157 @@
+{
+  "dataset": "kerrcat_nbar1_d5_X",
+  "code": {
+    "family": "repetition cat code",
+    "distance": 5,
+    "rounds": 5,
+    "basis": "X",
+    "layout": "cats 0..d-1, ancillas d..2d-2; stabilizer j = X_j X_{j+1}; CX(ancilla j -> cat j) then (-> cat j+1)",
+    "observable": "parity change of cat 0 (X_L = X_1)"
+  },
+  "noise_model": {
+    "name": "kerrcat(nbar=1, kappa/K=0.000167, n_th=0.08, K=10 MHz, LRU=True)",
+    "model": "kerrcat",
+    "nbar": 1.0,
+    "knobs": {
+      "kappa_over_K": 0.000167,
+      "n_th": 0.08,
+      "K_MHz": 10.0,
+      "kappa2_over_K": 0.1,
+      "lru": true
+    },
+    "is_reference_point": false,
+    "reference_point": {
+      "nbar": 6.25,
+      "kappa_over_K": 0.000167,
+      "n_th": 0.08,
+      "K_MHz": 10.0,
+      "kappa2_over_K": 0.1,
+      "lru": true
+    },
+    "grid_nbar": [
+      6.25,
+      1.0,
+      2.0,
+      4.0
+    ],
+    "parameters": {
+      "p_data": [
+        [
+          0.0012683592536831823,
+          0.0,
+          0.036806799999999994
+        ],
+        [
+          0.0005007490828133343,
+          0.0,
+          0.014528999999999999
+        ],
+        [
+          0.0005007490828133343,
+          0.0,
+          0.014528999999999999
+        ],
+        [
+          0.0005007490828133343,
+          0.0,
+          0.014528999999999999
+        ],
+        [
+          0.0012683592536831823,
+          0.0,
+          0.036806799999999994
+        ]
+      ],
+      "f_mid": 0.0,
+      "p_stab_x": null,
+      "cx_channel": {
+        "ZI": 0.02170786516853932,
+        "IZ": 0.01085393258426966,
+        "ZZ": 0.01085393258426966,
+        "XI": 0.00021535580524344565,
+        "IX": 0.00021535580524344565,
+        "YI": 0.00021535580524344565,
+        "YX": 0.00021535580524344565,
+        "XX": 0.00021535580524344565,
+        "ZX": 0.00021535580524344565,
+        "IY": 0.00021535580524344565,
+        "XY": 0.00021535580524344565,
+        "XZ": 0.00021535580524344565,
+        "YY": 0.00021535580524344565,
+        "YZ": 0.00021535580524344565,
+        "ZY": 0.00021535580524344565
+      },
+      "p_meas": 0.02,
+      "p_herald": 0.0,
+      "p_prep": 0.004000000000000002,
+      "p_data_meas": 0.02,
+      "p_data_meas_z": 0.0046,
+      "p_data_herald_x": 0.0,
+      "leak_data": {
+        "p_leak": 0.0040748,
+        "p_return": 1.0,
+        "partner": {
+          "Z": 0.5
+        },
+        "pair": {},
+        "randomize_measurement": false,
+        "dephase_self": true,
+        "heralded": false,
+        "return_paulis": "Z"
+      },
+      "leak_anc": {
+        "p_leak": 0.0040748,
+        "p_return": 1.0,
+        "partner": {},
+        "pair": {},
+        "randomize_measurement": true,
+        "dephase_self": false,
+        "heralded": false,
+        "return_paulis": "Z"
+      }
+    },
+    "provenance": {
+      "preset": "presets/kerrcat.yaml (the DA21 tables and every other literature number with its source)",
+      "cycle": "DA21 Tables I-II operation times (units of 1/K): T_P 16.5 / 2.6, T_M = T_P + T_CD 58.5 / 5.1 at |a|^2 = 1 / 6.25 (log-linear in |a|^2 between, 6.25 values beyond), T_CX = 115/|a|^2 (112.6 / 18.47); K/2pi = 10.0 MHz -> round 4854 ns",
+      "cx_channel[Z]": "DA21 Tables I-II: CX infidelity x bias/(1 + bias) (power law in kappa/K, log-linear in |a|^2 between 1 and 6.25, constant beyond since T_CX ~ 1/|a|^2), times (1 + 2 n_th)/(1 + 2 x 0.08) for other thermal populations; split Z_aI : IZ_d : Z_aZ_d = 1 : 1/2 : 1/2 (DA21 generic bias-preserving CX, pp. 8-9). Our loss-and-gain estimate 2 kappa (1 + 2 n_th) |a|^2 T_CX agrees within 5% at |a|^2 = 6.25 and 5-12% at 1",
+      "cx_channel[non-Z]": "DA21 Tables I-II: CX infidelity/(1 + bias), split equally over the 12 bit-flip-type Paulis (no published split); beyond |a|^2 = 6.25 heating-limited, scaled by 6.25/|a|^2 (our estimate kappa n_th T_CX/2 = 1.2e-4 accounts for 84% of the DA21 value 1.5e-4 at the design point)",
+      "p_data[Z]": "kappa (1 + 2 n_th) |a|^2 per unit time during T_P + T_M, and during the other CX layer for the two boundary cats (PU20 Table I, thermal bath)",
+      "p_data[X]": "heating-limited bit-flip plateau T_X = (kappa n_th)^-1 over the same idle times (Frattini et al., PRX 14, 031040 (2024), plateau model; measured T_X ~ 0.6-1.2 ms: Hajr et al., PRX 14, 041049 (2024); Qing et al., PNAS 123, e2520479123 (2026))",
+      "p_prep/p_meas": "DA21 Tables I-II preparation (Z + Y) and measurement infidelity (same interpolation as the CX); at the design point 0.003 and 0.008",
+      "p_data_meas_z": "well (Z) readout: single-shot infidelity 0.46% (Frattini et al., PRX 14, 031040 (2024))",
+      "leak_data": "single-photon gain excites the first excited manifold at kappa n_th (PU20 p. 7); per round kappa n_th T_round (DA21: 1e-4 - 1e-3 per qubit and round); return by loss kappa (1 + n_th) and, with the LRU, by two-photon loss 4 kappa2 |a|^2 during the kappa2 half of each CX (DA21 two-step CX, kappa2 = K/10); return by two-photon loss gives a phase flip (PU20), so the return re-randomizes Z only; while leaked the neighbouring syndromes are random (incoherent approximation, Marshall & Kafri 2025)",
+      "leak_anc": "ancillas are Kerr cats too: the same rates; a leaked ancilla gives a random outcome; its effect on the CX partners is not modelled",
+      "note": "DA21 publish only infidelity and average bias, and neglect the residual leakage in their code simulations; current experiments (K/2pi = 1.2 MHz, T1 ~ 40 us, n_th 4-5%: Hajr et al., Qing et al.) are far above the repetition-code threshold with this CX",
+      "validation": "reproduces the DA21 CX, preparation and measurement numbers by construction; compared with the DA21 exact n = 9 repetition-code simulation in examples/literature_checks_models.py"
+    }
+  },
+  "generator": {
+    "package": "bosonoise",
+    "version": "0.1.0",
+    "git_commit": "1f4e3644403897d6f7e0703153937f8be9d6be5a",
+    "script": "examples/noise_model_datasets.py",
+    "seed": 215001,
+    "sampler": "stim.FlipSimulator + leakage in the incoherent approximation (dem/noise_models.py)"
+  },
+  "layout": {
+    "heralds": "round-major; per round the d-1 syndrome-erasure heralds of ancillas 0..d-2 (kind 1: ancilla found outside the qubit subspace, outcome random), then, if the model has them, the heralded bit flips of cats 0..d-1 (kind 2); the same bits are the herald detectors of detectors.b8, coordinates (x, round, kind); kind 0 = syndrome detectors",
+    "leakage": "rounds x (cats then ancillas) (round-major); 1 = leaked during that round"
+  },
+  "baseline_decoding": {
+    "decoder": "X basis: PyMatching 2 on the circuit DEM (leakage not in the DEM), correlated matching with the heralds; Z basis: none (no Z stabilizers), heralded cat bit flips undone",
+    "logical_failure_with_heralds": 0.05325,
+    "logical_failure_without_heralds": 0.05325,
+    "logical_error_per_round_from_R_d_and_3d": 0.013611253655868127,
+    "logical_error_per_round_std": 0.00041099173682239486,
+    "note": "Z basis: the failure is the odd-parity probability of all cats, including the initial and final well readout"
+  },
+  "schema_version": "0.1",
+  "created": "2026-10-01T04:32:00+00:00",
+  "shots": 20000,
+  "num_detectors": 44,
+  "num_observables": 1,
+  "optional_arrays": {
+    "heralds": 20,
+    "leakage": 45
+  }
+}

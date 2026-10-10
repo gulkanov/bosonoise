@@ -1,0 +1,14 @@
+# TLS density from the T1 dips of Ocelot Fig. 18c (A3): observed 3 dips below 0.5 x the smooth trend; simulated with the broad prior (scale = TLS per GHz; g01 0.02-2 MHz, T1_TLS 0.3-10 us) and the literature prior (scale = multiplier of its densities). examples/tls_density_fig18c_ocelot.py
+prior,scale,mean_dips,P_equal_observed,P_at_least_observed,P_equal_observed_isolated
+broad,2,0.24425,0.0065,0.02825,0
+broad,5,0.593,0.01575,0.06475,0
+broad,10,1.15775,0.0285,0.12875,0
+broad,20,2.47925,0.051,0.27,0.0005
+broad,40,4.8195,0.07325,0.48425,0.001
+broad,80,9.69675,0.0655,0.76375,0.007
+broad,160,17.6315,0.01875,0.97,0.00375
+literature,1,2.475,0.0285,0.1575,0.00025
+literature,3,7.03,0.064,0.47375,0.002
+literature,10,20.52,0.016,0.96675,0.00325
+literature,30,29.8987,0,1,0
+literature,100,30,0,1,0

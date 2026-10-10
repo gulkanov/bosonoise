@@ -1,0 +1,22 @@
+# external inputs, see docs/reproduction.md (not redistributed)
+literature/
+# large simulation outputs and logs
+runs/
+*.h5
+*.npz
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+.venv/
+# OS / editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+# export marker (local only)
+.exported-from-research

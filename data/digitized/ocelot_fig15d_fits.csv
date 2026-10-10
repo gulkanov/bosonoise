@@ -1,0 +1,4 @@
+# Decay constants of the AWS exponential fit curves drawn in Fig. 15(d), p.28 (A1-S1, ancilla g+f, |P(+-alpha) - 1/2| ~ exp(-t/tau)), vs the bit-flip time T_X reported for the same data in Fig. 2(c). VALIDATION ONLY.
+alpha2,tau_fit_us,T_X_fig2c_us,ratio
+1.0,172.3,336.8,1.955
+3.0,625.8,1223,1.955

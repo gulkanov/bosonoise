@@ -1,0 +1,138 @@
+label: A1 cells joint static calibration
+date: '2026-09-29'
+units: GHz
+priors:
+  source: data/calibration/ocelot_A2S3_fitA.yaml (A2-S3 fit A)
+  EJmax_c: 62.113726357991766
+  EC_c: 0.1673727555225529
+  g_cq: 0.163241524641534
+  g_sq_over_g_sc: 0.19517745778610687
+  f_c_min_bare_GHz: 6.568962519634539
+  d_c: 0.5463351888329591
+  note: coupler and coupling-structure parameters NOT published; prior from A2-S3
+fitted:
+  EJ_q: 21.179878260212817
+  EC_q: 0.17442228178591732
+  f_s_S1: 5.256560127566785
+  g_sc_S1: 0.07102960623360582
+  f_s_S2: 5.275049833857531
+  g_sc_S2: 0.06421143393982759
+cells:
+  S1:
+    f_s: 5.256560127566785
+    EJ_q: 21.179878260212817
+    EC_q: 0.17442228178591732
+    EJmax_c: 62.113726357991766
+    EC_c: 0.1673727555225529
+    d_c: 0.5463351888329591
+    g_sc: 0.07102960623360582
+    g_sq: 0.013863377972223395
+    g_cq: 0.163241524641534
+    ng_q: 0.0
+    ng_c: 0.0
+    K_s_extra: 1.851010627129389e-06
+  S2:
+    f_s: 5.275049833857531
+    EJ_q: 21.179878260212817
+    EC_q: 0.17442228178591732
+    EJmax_c: 62.113726357991766
+    EC_c: 0.1673727555225529
+    d_c: 0.5463351888329591
+    g_sc: 0.06421143393982759
+    g_sq: 0.01253262443717609
+    g_cq: 0.163241524641534
+    ng_q: 0.0
+    ng_c: 0.0
+    K_s_extra: 1.851010627129389e-06
+targets:
+- cell: A1-S1
+  quantity: f_ge
+  flux: 0.0
+  target: 5.2
+  sigma: 0.005
+  model: 5.1994356858833415
+  pull: -0.11286282333173858
+  source: Ocelot Fig. 9b p.22
+- cell: A1-S1
+  quantity: f_s
+  flux: 0.0
+  target: 5.24
+  sigma: 0.005
+  model: 5.250826850899764
+  pull: 2.1653701799527525
+  source: Ocelot Fig. 9b p.22
+- cell: A1-S1
+  quantity: chi_ge
+  flux: 0.5
+  target: -0.00265
+  sigma: 1.0e-05
+  model: -0.0026548126094869673
+  pull: -0.48126094869672775
+  source: Ocelot Fig. 12 p.24, A1<->S1
+- cell: A1-S1
+  quantity: chi_gf
+  flux: 0.5
+  target: -0.00237
+  sigma: 1.0e-05
+  model: -0.002364640623015113
+  pull: 0.5359376984887236
+  source: Ocelot Fig. 12 p.24, A1<->S1
+- cell: A1-S2
+  quantity: f_ge
+  flux: 0.0
+  target: 5.2
+  sigma: 0.005
+  model: 5.199444974088158
+  pull: -0.11100518236837331
+  source: Ocelot Fig. 9b p.22
+- cell: A1-S2
+  quantity: f_s
+  flux: 0.0
+  target: 5.28
+  sigma: 0.005
+  model: 5.270341451612675
+  pull: -1.9317096774649656
+  source: Ocelot Fig. 9b p.22
+- cell: A1-S2
+  quantity: chi_ge
+  flux: 0.5
+  target: -0.0018000000000000002
+  sigma: 1.0e-05
+  model: -0.0017928408032927834
+  pull: 0.7159196707216775
+  source: Ocelot Fig. 12 p.24, A1<->S2
+- cell: A1-S2
+  quantity: chi_gf
+  flux: 0.5
+  target: -0.0016899999999999999
+  sigma: 1.0e-05
+  model: -0.0016975418487197302
+  pull: -0.754184871973036
+  source: Ocelot Fig. 12 p.24, A1<->S2
+derived:
+- cell: A1-S1
+  derived:
+    f_ef: 5.018116922736101
+    alpha_q_MHz: -181.3187631472406
+    f_c_on: 6.654767722734759
+    detuning_idle_MHz: 51.39116501642249
+    detuning_on_MHz: 92.0576516429108
+    alpha_on_MHz: -161.9836203205196
+    chi_ge_on_MHz: -2.6548126094869673
+- cell: A1-S2
+  derived:
+    f_ef: 5.0181133640504045
+    alpha_q_MHz: -181.33161003775376
+    f_c_on: 6.653438392141817
+    detuning_idle_MHz: 70.89647752451711
+    detuning_on_MHz: 111.26646116540596
+    alpha_on_MHz: -162.82342867879862
+    chi_ge_on_MHz: -1.7928408032927834
+cost: 5.0227837875422745
+truncation:
+  n_s: 8
+  n_c: 6
+  n_q: 8
+  ncut: 20
+  e_cut: null
+  ref_flux: 0.5
