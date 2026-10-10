@@ -478,7 +478,7 @@ def cx2_measured():
         ax.semilogy(x, col(sel, "data_fexcess"), "o", ms=3.5, mfc="none", mew=0.9, color=TEXT_PRIMARY, label="data")
         ax.semilogy(x, col(sel, "ffault_zerofit"), "-", color=SERIES[0], label=r"idle-referenced $T_1$")
         ax.semilogy(x, col(sel, "ffault_coupler18c"), "--", color=SERIES[2],
-                    label=rf"coupler loss, $T_{{1,c}}={num(sel[0]['coupler_T1_us']):.1f}~\mu$s")
+                    label=rf"coupler loss, $T_{{1,c}}={num(sel[0]['coupler_T1_us']):.2f}~\mu$s")
         if sel[0].get("ffault_ongate_coupler_on"):
             ax.fill_between(x, col(sel, "ffault_ongate_coupler_on"), col(sel, "ffault_ongate_pulsed_alpha2_4"),
                             color=SERIES[3], alpha=0.35, lw=0, label=r"measured on-gate $T_1$ (held to pulsed)")
@@ -539,7 +539,10 @@ def tls_family():
         ax.plot(nb, col(fam, k), color=BLUE_ORDINAL[i], lw=1.0,
                 label=f"defect at {float(k[1:]):.3f} GHz" if i in (0, len(keys) - 1) else None)
     a2, Pg = col(d, "alpha2"), col(d, "P_g")
-    ax.plot(a2, Pg - Pg[0], "o", ms=2.2, color=SERIES[1], label="data (A4–S4)")
+    base = Pg[a2 < 2].mean()  # baseline as in the text and Fig. bayes: mean of the points at |alpha|^2 < 2
+    ipk = int(np.argmax(Pg))
+    peak = Pg[ipk - 3:ipk + 4].mean() - base  # seven-point mean at the peak (paper App. E.1: 0.084)
+    ax.plot(a2, Pg - base, "o", ms=2.2, color=SERIES[1], label="data (A4–S4)")
     ax.set_xlabel(r"$|\alpha|^2$")
     ax.set_ylabel(r"$\Delta P_g$ after 800 ns")
     ax.set_ylim(-0.006, 0.142)
@@ -553,8 +556,8 @@ def tls_family():
     title(axs[1], r"(b) $T_{1,\rm TLS}=1~\mu$s")
     title(axs[2], r"(c) $g_{01}=0.5$ MHz")
     for ax, loc in ((axs[1], "upper left"), (axs[2], "lower center")):
-        ax.axhline(0.097, color=TEXT_SECONDARY, lw=0.8, ls="--")
-        ax.text(0.98, 0.097, "data", transform=ax.get_yaxis_transform(), ha="right", va="bottom", fontsize=6.3,
+        ax.axhline(peak, color=TEXT_SECONDARY, lw=0.8, ls="--")
+        ax.text(0.98, peak, "data", transform=ax.get_yaxis_transform(), ha="right", va="bottom", fontsize=6.3,
                 color=TEXT_SECONDARY)
         ax.set_xlabel("defect frequency (GHz)")
         ax.set_ylabel(r"interior peak of $\Delta P_g$")
