@@ -156,10 +156,13 @@ def cost_panel(ax):
     dm = [q for q in cm if q["kind"] == "drive_matched"]
     ax.plot([abs(num(q["x"])) for q in dm], [2 * np.pi * num(q["cost_coeff"]) for q in dm], "s", color=SERIES[6],
             ms=4.5, zorder=4, label="matched by a drive")
+    # labels on the side of the marker away from the curve: above-right of the solid line, below-left of the dashed one
+    place = {"Reinhold": dict(xytext=(4, 4), ha="left", va="bottom"),
+             "Rosenblum": dict(xytext=(-5, -4), ha="right", va="top")}
     for q in dm:
         name = q["name"].split()[0]
-        ax.annotate(name, (abs(num(q["x"])), 2 * np.pi * num(q["cost_coeff"])), xytext=(0, 6),
-                    textcoords="offset points", fontsize=6.3, ha="center", color=SERIES[6])
+        ax.annotate(name, (abs(num(q["x"])), 2 * np.pi * num(q["cost_coeff"])), textcoords="offset points",
+                    fontsize=6.3, color=SERIES[6], **place.get(name, dict(xytext=(0, 6), ha="center")))
     ax.text(0.97, 0.97, "qubit ancilla $(g,e)$:\nno charge-noise channel", transform=ax.transAxes, fontsize=6.5,
             ha="right", va="top", color=TEXT_SECONDARY, style="italic")
     ax.set_xscale("log")
