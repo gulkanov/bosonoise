@@ -5,8 +5,8 @@ models**.
 
 This repository holds the code and the data products of the paper
 
-> **Photon-stimulated decay of χ-matched ancillas causes unheralded bit flips in bosonic codes** (2026). The arXiv
-> identifier will be added here.
+> Aleksandr Gulkanov, **Photon-stimulated decay of χ-matched ancillas causes unheralded bit flips in bosonic codes**,
+> arXiv:2610.17017 [quant-ph] (2026), https://arxiv.org/abs/2610.17017.
 
 Every figure and table of the paper is reproduced by one command (see [Reproducing the paper](#reproducing-the-paper)).
 Version 0.1.0; see `CHANGELOG.md`.

@@ -3,7 +3,7 @@
 ## 0.1.0 — first public version
 
 The code and data products of the paper
-"Photon-stimulated decay of χ-matched ancillas causes unheralded bit flips in bosonic codes": a package that
+"Photon-stimulated decay of χ-matched ancillas causes unheralded bit flips in bosonic codes" (arXiv:2610.17017): a package that
 reproduces every figure and table of the paper with one command each, three reference noise models of repetition cat
 codes in Stim format, and 72 syndrome datasets.
 
